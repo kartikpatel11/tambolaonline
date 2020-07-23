@@ -13,13 +13,17 @@ class TambolaRandomTicketNumberGenerator {
         val randomValues = getRandomValues()
 
         print(randomValues)
-        //TODO: Add numbers in array
-        for(i in randomValues)
+        // Add numbers in array
+        for(number in randomValues)
         {
-            for(j in 0..9)
-            {
+            var rowPos = Random.nextInt(0,ticket_row)
+            var colPos = if(number <10) 0 else number%10
 
-            }
+            ticket[rowPos][colPos]=number
+        }
+
+        for(i in ticket.indices) {
+            print(ticket[i].contentToString())
         }
     }
 
