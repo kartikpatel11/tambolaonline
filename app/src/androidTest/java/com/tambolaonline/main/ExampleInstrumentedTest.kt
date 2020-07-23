@@ -1,4 +1,4 @@
-package com.tambolaonline.tambola
+package com.tambolaonline.main
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

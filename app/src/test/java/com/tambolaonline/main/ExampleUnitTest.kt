@@ -1,4 +1,4 @@
-package com.tambolaonline.tambola
+package com.tambolaonline.main
 
 import org.junit.Test
 
