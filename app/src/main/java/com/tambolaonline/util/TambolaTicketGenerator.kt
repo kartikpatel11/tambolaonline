@@ -1,5 +1,7 @@
 package com.tambolaonline.util
 
+import android.os.Build
+import com.tambolaonline.variations.TambolaFirstRowVariation
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.ArrayList
@@ -44,6 +46,7 @@ class TambolaTicketGenerator {
         for(i in ticket.indices) {
             println(ticket[i].contentToString())
         }
+
     }
 
 
