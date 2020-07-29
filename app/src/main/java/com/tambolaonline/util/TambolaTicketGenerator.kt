@@ -73,7 +73,7 @@ class TambolaTicketGenerator {
 
 }
 
-fun main(args:Array<String>)
+/*fun main(args:Array<String>)
 {
     TambolaTicketGenerator().generateTicket()
-}
+}*/
