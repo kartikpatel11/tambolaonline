@@ -4,20 +4,28 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
+import com.tambolaonline.data.Game
+import com.tambolaonline.util.TambolaConstants
+import com.tambolaonline.util.TambolaSharedPreferencesManager
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        TambolaSharedPreferencesManager.with(this.application)
 
         val startgameBtn = findViewById<Button>(R.id.startGameButton)
         startgameBtn.setOnClickListener{
-            Toast.makeText(this@MainActivity,"Add your code here to go to next screen",Toast.LENGTH_SHORT).show()
-            var contactListActivity: ContactListActivity = ContactListActivity()
-            contactListActivity
 
+            //Initialize Game Object and put in sharedpreference to use in next screen
+            var game = Game()
+
+            var contactListActivity: ContactListActivity = ContactListActivity()
             var intent: Intent = Intent(applicationContext, ContactListActivity::class.java)
+
+            TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
+
             startActivity(intent)
         }
     }

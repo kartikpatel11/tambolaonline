@@ -14,9 +14,6 @@ class TambolaGamePlay {
         val variations = game.variations
         val currState = game.currentState
 
-        //Initialize currentstate with 0
-        currState.add(0)
-
         while (game.notDone()) {
             //Generate Random number
             var currNumber = 0
