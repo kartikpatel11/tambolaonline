@@ -36,6 +36,8 @@ object TambolaSharedPreferencesManager {
         //Convert object to JSON String.
         val jsonString = GsonBuilder().create().toJson(`object`)
         //Save that String in SharedPreferences
+        println("Storing Json Object in sharedPreference with key=$key & value = $jsonString")
+
         preferences.edit().putString(key, jsonString).apply()
     }
 
@@ -50,6 +52,8 @@ object TambolaSharedPreferencesManager {
         //JSON String was found which means object can be read.
         //We convert this JSON String to model object. Parameter "c" (of
         //type Class < T >" is used to cast.
+        println("Retrieving Json string in sharedPreference with key=$key & value = $value")
+
         return GsonBuilder().create().fromJson(value, T::class.java)
     }
 

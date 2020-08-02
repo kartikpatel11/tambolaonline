@@ -20,11 +20,9 @@ class MainActivity : AppCompatActivity() {
 
             //Initialize Game Object and put in sharedpreference to use in next screen
             var game = Game()
-
-            var contactListActivity: ContactListActivity = ContactListActivity()
-            var intent: Intent = Intent(applicationContext, ContactListActivity::class.java)
-
             TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
+
+            var intent: Intent = Intent(applicationContext, VariationsListActivity::class.java)
 
             startActivity(intent)
         }
