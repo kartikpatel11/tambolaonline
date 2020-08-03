@@ -3,6 +3,7 @@ package com.tambolaonline.util
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.gson.GsonBuilder
 
 /**
@@ -12,6 +13,8 @@ object TambolaSharedPreferencesManager {
 
     //Shared Preference field used to save and retrieve JSON string
     lateinit var preferences: SharedPreferences
+
+    val TAG = "TambolaPreferencesMgr::"
 
     //Name of Shared Preference file
     private const val PREFERENCES_FILE_NAME = TambolaConstants.TAMBOLA_SHARED_PREFERENCES_FILE
@@ -36,7 +39,7 @@ object TambolaSharedPreferencesManager {
         //Convert object to JSON String.
         val jsonString = GsonBuilder().create().toJson(`object`)
         //Save that String in SharedPreferences
-        println("Storing Json Object in sharedPreference with key=$key & value = $jsonString")
+        Log.i(TAG,"Storing Json Object in sharedPreference with key=$key & value = $jsonString")
 
         preferences.edit().putString(key, jsonString).apply()
     }
@@ -52,7 +55,7 @@ object TambolaSharedPreferencesManager {
         //JSON String was found which means object can be read.
         //We convert this JSON String to model object. Parameter "c" (of
         //type Class < T >" is used to cast.
-        println("Retrieving Json string in sharedPreference with key=$key & value = $value")
+        Log.i(TAG,"Retrieving Json string in sharedPreference with key=$key & value = $value")
 
         return GsonBuilder().create().fromJson(value, T::class.java)
     }

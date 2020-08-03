@@ -9,9 +9,16 @@ import android.content.ContentResolver
 import android.content.pm.PackageManager
 import android.util.Log
 import android.widget.ArrayAdapter
+import com.tambolaonline.data.Game
+import com.tambolaonline.util.TambolaConstants
+import com.tambolaonline.util.TambolaSharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_contact_list.*
 
 class ContactListActivity : AppCompatActivity() {
+
+    val TAG = "ContactListActivity::"
+    lateinit var game: Game
+
 
     companion object {
         val PERMISSIONS_REQUEST_READ_CONTACTS = 100
@@ -20,6 +27,12 @@ class ContactListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_list)
+
+        //Get Game object from shared preferences
+        TambolaSharedPreferencesManager.with(this.application)
+        game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
+
+
         loadContacts()
     }
 
@@ -43,7 +56,7 @@ class ContactListActivity : AppCompatActivity() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 loadContacts()
             } else {
-                print("Permission must be granted in order to display contacts information")
+                Log.i(TAG,"Permission must be granted in order to display contacts information")
             }
         }
     }

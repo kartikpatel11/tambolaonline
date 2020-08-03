@@ -6,6 +6,14 @@ enum class VariationTypes (val variationname: String, val variationclass:IGameVa
     THIRD_ROW("Third Row",TambolaThirdRowVariation()),
     //FOUR_CORNER("Four Corner".null),
     LUCKY_FIVE("Lucky Five", TambolaLuckyFiveVariation()),
-    FULL_HOUSE("Full House", TambolaFullHouseVariation())
+    FULL_HOUSE("Full House", TambolaFullHouseVariation());
+
+    companion object   {
+        private val map = VariationTypes.values().associateBy { it.variationname }
+        fun fromVariationName (varName: String) : VariationTypes? {
+            return map[varName]
+        }
+
+    }
 }
 

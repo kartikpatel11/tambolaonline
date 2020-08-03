@@ -1,6 +1,7 @@
 package com.tambolaonline.util
 
 import android.os.Build
+import android.util.Log
 import com.tambolaonline.variations.TambolaFirstRowVariation
 import java.util.*
 import java.util.stream.Collectors
@@ -13,6 +14,9 @@ class TambolaTicketGenerator {
 
     private val TICKET_ROW = 3
     private val TICKET_COL = 9
+
+    val TAG = "TambolaTicketGen::"
+
     fun generateTicket(): Unit {
         val ticket =  Array(TICKET_ROW){IntArray(TICKET_COL)}
         val ticketMap = HashMap<Int,ArrayList<Int>>()
@@ -44,7 +48,7 @@ class TambolaTicketGenerator {
 
 
         for(i in ticket.indices) {
-            println(ticket[i].contentToString())
+            Log.i(TAG,ticket[i].contentToString())
         }
 
     }

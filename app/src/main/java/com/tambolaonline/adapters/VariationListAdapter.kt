@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.TextView
+import com.tambolaonline.data.VariationListAdapterDataSet
 import com.tambolaonline.main.R
 import com.tambolaonline.variations.VariationTypes
 
-class VariationListAdapter (private val dataset:Array<VariationTypes>, context: Context): ArrayAdapter<VariationTypes>(context,
+class VariationListAdapter (private val dataset:ArrayList<VariationListAdapterDataSet>, context: Context): ArrayAdapter<VariationListAdapterDataSet>(context,
     R.layout.variationslist_item_view, dataset) {
 
     private class ViewHolder {
@@ -22,8 +23,8 @@ class VariationListAdapter (private val dataset:Array<VariationTypes>, context: 
         return dataset.size
     }
 
-    override fun getItem(position: Int): VariationTypes {
-        return dataset[position]
+    override fun getItem(position: Int): VariationListAdapterDataSet {
+        return dataset.get(position)
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -47,9 +48,9 @@ class VariationListAdapter (private val dataset:Array<VariationTypes>, context: 
             result=convertView
         }
 
-        val item : VariationTypes = dataset[position]
-        viewHolder.txtName.text = item.variationname
-        viewHolder.checked.isChecked = false
+        val item : VariationListAdapterDataSet = dataset.get(position)
+        viewHolder.txtName.text = item.variationName
+        viewHolder.checked.isChecked = item.isChecked
 
         return result
     }
