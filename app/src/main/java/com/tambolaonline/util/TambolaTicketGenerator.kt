@@ -19,16 +19,12 @@ class TambolaTicketGenerator {
 
     fun generateTicket(): Unit {
         val ticket =  Array(TICKET_ROW){IntArray(TICKET_COL)}
-        val ticketMap = HashMap<Int,ArrayList<Int>>()
 
         val randomValues:List<Int> = getRandomValues()
 
-        for(number in randomValues) {
-            var key = Math.abs(number/10)
-            if(ticketMap.get(key) == null)
-                ticketMap.put(key,ArrayList<Int>(3))
-            ticketMap.get(key)?.add(number)
-        }
+        var ticketMap: MutableMap<Int, MutableList<Int>> = randomValues.groupByTo (mutableMapOf(),{Math.abs(it/10) })
+
+
 
         for((key, value) in ticketMap) {
 
@@ -47,9 +43,8 @@ class TambolaTicketGenerator {
         }
 
 
-        for(i in ticket.indices) {
-            Log.i(TAG,ticket[i].contentToString())
-        }
+           Log.i(TAG, ticket.contentDeepToString())
+
 
     }
 
