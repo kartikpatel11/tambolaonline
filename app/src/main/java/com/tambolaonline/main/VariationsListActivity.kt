@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.AbsListView.CHOICE_MODE_MULTIPLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.CheckBox
 import android.widget.ListView
 import androidx.core.view.size
 import com.tambolaonline.adapters.VariationListAdapter

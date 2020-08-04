@@ -6,8 +6,10 @@ import android.os.Build
 import android.Manifest
 import android.provider.ContactsContract
 import android.content.ContentResolver
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import com.tambolaonline.data.Game
 import com.tambolaonline.util.TambolaConstants
@@ -102,4 +104,12 @@ class ContactListActivity : AppCompatActivity() {
         // return builder
         contactListView.adapter = adapter
     }
+
+    fun selectParticipants(view: View) {
+        var intent: Intent = Intent(applicationContext, TambolaPlayGroundActivity::class.java)
+
+        startActivity(intent)
+
+    }
+
 }

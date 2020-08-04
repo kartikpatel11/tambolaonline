@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/navigation_playground"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/title_playground" />
+
+    <item
+        android:id="@+id/navigation_winners"
+        android:icon="@drawable/ic_baseline_emoji_events_24"
+        android:title="@string/title_winners" />
+
+    <item
+        android:id="@+id/navigation_participant_tickets"
+        android:icon="@drawable/ic_baseline_view_comfy_24"
+        android:title="@string/title_participant_tickets" />
+</menu>
