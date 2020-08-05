@@ -4,7 +4,7 @@ import com.tambolaonline.util.TambolaTicketGenerator
 import java.util.function.Predicate
 
 class TambolaFirstRowVariation : IGameVariation {
-    override fun applyVariation(ticket: Array<IntArray>, currentState: List<Int>): Boolean {
+    override fun applyVariation(ticket: Array<IntArray>, currentState: Set<Int>): Boolean {
 
         var firstrowHash = HashSet(ticket[0].asList())
         if(firstrowHash.size > 1 || !(firstrowHash.size ==1 && firstrowHash.contains(0))) {
