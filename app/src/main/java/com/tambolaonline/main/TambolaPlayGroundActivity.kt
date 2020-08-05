@@ -101,7 +101,7 @@ class TambolaPlayGroundActivity : AppCompatActivity() {
         if(!game.notDone()) {
             var randomNumberGenBtn = findViewById<ImageButton>(R.id.btn_generaterandnumber)
             randomNumberGenBtn.setClickable(false)
-            randomNumberGenBtn.setBackgroundTintList(getColorStateList(R.color.grey))
+            randomNumberGenBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
         }
 
     }

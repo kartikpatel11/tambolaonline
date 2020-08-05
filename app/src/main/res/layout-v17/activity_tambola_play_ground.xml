@@ -45,11 +45,11 @@
                 />
             <ImageButton
                 android:id="@+id/btn_generaterandnumber"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_baseline_play_circle_outline_24"
-                android:backgroundTint="@color/colorAccent"
+                android:src="@drawable/ic_baseline_play_circle_filled_accent_24"
+                android:backgroundTint="@android:color/transparent"
                 android:clickable="true"
                 android:onClick="nextRandomNumber"
                 android:scaleType="fitCenter"
