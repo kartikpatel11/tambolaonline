@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.tambolaonline.data.Game
+import com.tambolaonline.data.notDone
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
 
@@ -75,20 +76,33 @@ class TambolaPlayGroundActivity : AppCompatActivity() {
     fun nextRandomNumber(view: View) {
         var currState = game.currentState
         var currNumber: Int
+
+       // Generate random number
         do {
             currNumber = (1..90).random()
         } while (currState.contains(currNumber))
 
+        //Show number in Current Number Text
         var currNumberTxtBox = findViewById<TextView>(R.id.txt_currentnumber)
         currNumberTxtBox.text = currNumber.toString()
 
-        //Add current number to hashMap
+        //Add current number to list
         currState.add(currNumber)
+
+        //Show number in recent list of numbers
+        var listofrecentnumsTxtBox = findViewById<TextView>(R.id.txt_listofnums)
+        listofrecentnumsTxtBox.text = currState.filter{num -> num!=0}.toList().takeLast(5).toString()
 
         //Highlight the number cell
         var numcell = findViewById<TextView>(currNumber)
         numcell.setBackgroundColor(this.getColor(R.color.colorAccent))
 
+        //Disable button if game is complete
+        if(!game.notDone()) {
+            var randomNumberGenBtn = findViewById<ImageButton>(R.id.btn_generaterandnumber)
+            randomNumberGenBtn.setClickable(false)
+            randomNumberGenBtn.setBackgroundTintList(getColorStateList(R.color.grey))
+        }
 
     }
 }

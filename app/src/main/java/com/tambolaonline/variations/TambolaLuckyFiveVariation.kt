@@ -6,7 +6,7 @@ import java.util.stream.Collectors
 
 
 class TambolaLuckyFiveVariation : IGameVariation{
-    override fun applyVariation(ticket: Array<IntArray>, currentState: Set<Int>): Boolean {
+    override fun applyVariation(ticket: Array<IntArray>, currentState: List<Int>): Boolean {
        //convert 2d array to list
         var flatList = HashSet<Int>()
        for(i in 0..2) {
