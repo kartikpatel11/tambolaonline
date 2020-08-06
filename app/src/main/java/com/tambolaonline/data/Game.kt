@@ -5,7 +5,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-data class Game(var gameID: UUID = UUID.randomUUID() , val participants: ArrayList<Participants> = ArrayList<Participants>(), val variations: HashMap<VariationTypes, Boolean> = HashMap<VariationTypes,Boolean>(), val currentState:ArrayList<Int> =  arrayListOf<Int>(0))
+data class Game(var gameID: UUID = UUID.randomUUID(),
+                val participants: ArrayList<Participant> = ArrayList<Participant>(),
+                val variations: HashMap<VariationTypes, Boolean> = HashMap<VariationTypes,Boolean>(),
+                val currentState:ArrayList<Int> =  arrayListOf<Int>(0))
 
 
 fun Game.notDone(): Boolean {

@@ -34,7 +34,6 @@ class ContactListActivity : AppCompatActivity() {
         TambolaSharedPreferencesManager.with(this.application)
         game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
 
-
         loadContacts()
     }
 
@@ -45,10 +44,8 @@ class ContactListActivity : AppCompatActivity() {
                 Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS),
                 PERMISSIONS_REQUEST_READ_CONTACTS)
-            //callback onRequestPermissionsResult
         } else {
             getContacts()
-            // listContacts.text = builder.toString()
         }
     }
 
@@ -64,7 +61,7 @@ class ContactListActivity : AppCompatActivity() {
     }
 
 
-    fun getContacts() {
+    private fun getContacts() {
         var itemList = arrayListOf<String>()
         var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, itemList)
 
@@ -101,8 +98,10 @@ class ContactListActivity : AppCompatActivity() {
             itemList.add("nisha")
             //   toast("No contacts available!")
         }
-        // return builder
         contactListView.adapter = adapter
+        contactListView.setOnItemClickListener { adapterView, view, i, l ->
+            android.widget.Toast.makeText(this, "You Selected the item --> "+itemList.get(i), android.widget.Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun selectParticipants(view: View) {

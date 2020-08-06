@@ -32,7 +32,7 @@ class VariationsListActivity : AppCompatActivity() {
 
         //Get Game object from shared preferences
         TambolaSharedPreferencesManager.with(this.application)
-         game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
+        game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
 
 
 
