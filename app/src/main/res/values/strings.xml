@@ -15,4 +15,6 @@
     <string name="title_playground">Playground</string>
     <string name="title_winners">Winners</string>
     <string name="title_participant_tickets">Tickets</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
