@@ -34,17 +34,12 @@ class VariationsListActivity : AppCompatActivity() {
         TambolaSharedPreferencesManager.with(this.application)
         game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
 
-
-
         // access the listView from xml file
         var mListView = findViewById<ListView>(R.id.variationlist)
         mListView.choiceMode = CHOICE_MODE_MULTIPLE
 
-
         var dataSet: ArrayList<VariationListAdapterDataSet> = ArrayList()
-
         VariationTypes.values().forEach { dataSet.add(VariationListAdapterDataSet(it.variationname,false)) }
-
 
         val variationAdapter = VariationListAdapter( dataSet, this)
         mListView.adapter = variationAdapter

@@ -2,7 +2,7 @@ package com.tambolaonline.util
 
 import android.util.Log
 import com.tambolaonline.data.Game
-import com.tambolaonline.data.Participants
+import com.tambolaonline.data.Participant
 import com.tambolaonline.data.notDone
 import com.tambolaonline.variations.VariationTypes
 

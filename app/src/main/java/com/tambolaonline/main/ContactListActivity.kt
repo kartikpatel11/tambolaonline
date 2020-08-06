@@ -12,15 +12,18 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import com.tambolaonline.data.Game
+import com.tambolaonline.data.Participant
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
+import com.tambolaonline.variations.VariationTypes
 import kotlinx.android.synthetic.main.activity_contact_list.*
 
 class ContactListActivity : AppCompatActivity() {
 
     val TAG = "ContactListActivity::"
     lateinit var game: Game
-
+    var itemList = arrayListOf<String>()
+    var participantList = arrayListOf<String>()
 
     companion object {
         val PERMISSIONS_REQUEST_READ_CONTACTS = 100
@@ -62,7 +65,7 @@ class ContactListActivity : AppCompatActivity() {
 
 
     private fun getContacts() {
-        var itemList = arrayListOf<String>()
+
         var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, itemList)
 
         val resolver: ContentResolver = contentResolver;
@@ -99,16 +102,26 @@ class ContactListActivity : AppCompatActivity() {
             //   toast("No contacts available!")
         }
         contactListView.adapter = adapter
+
+
         contactListView.setOnItemClickListener { adapterView, view, i, l ->
-            android.widget.Toast.makeText(this, "You Selected the item --> "+itemList.get(i), android.widget.Toast.LENGTH_SHORT).show()
+            if (participantList.contains(itemList[i])) {
+                participantList.remove(itemList[i])
+            } else {
+                participantList.add(itemList[i])
+            }
+            // android.widget.Toast.makeText(this, "You Selected the item --> "+itemList[i], android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 
     fun selectParticipants(view: View) {
+        Log.e("select participants", "")
+        participantList.forEachIndexed { index, element ->
+            var participant = Participant(participantID = index, name = element, ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            game.participants.add(participant)
+        }
         var intent: Intent = Intent(applicationContext, TambolaPlayGroundActivity::class.java)
-
         startActivity(intent)
-
     }
 
 }
