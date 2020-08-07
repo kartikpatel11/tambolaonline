@@ -12,11 +12,11 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.tambolaonline.data.Participants
+import com.tambolaonline.data.Participant
 import com.tambolaonline.main.R
 import com.tambolaonline.util.TambolaTicketGenerator
 
-class ParticipantTicketRecyclerViewAdapter(val participants: ArrayList<Participants>, val currentState: ArrayList<Int>, val mContext:Context): RecyclerView.Adapter<ParticipantTicketRecyclerViewAdapter.ViewHolder>()  {
+class ParticipantTicketRecyclerViewAdapter(val participants: ArrayList<Participant>, val currentState: ArrayList<Int>, val mContext:Context): RecyclerView.Adapter<ParticipantTicketRecyclerViewAdapter.ViewHolder>()  {
 
     class ViewHolder(ticketView : View):RecyclerView.ViewHolder(ticketView){
         var name = ticketView.findViewById<TextView>(R.id.participant_name)

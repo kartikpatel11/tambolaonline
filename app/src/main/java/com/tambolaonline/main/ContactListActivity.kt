@@ -117,7 +117,7 @@ class ContactListActivity : AppCompatActivity() {
     fun selectParticipants(view: View) {
         Log.e("select participants", "")
         participantList.forEachIndexed { index, element ->
-            var participant = Participant(participantID = index, name = element, ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            var participant = Participant(participantID = index, phno = "tobefilledbychhoti" , name = element, ticket = emptyArray(), prize = HashSet<VariationTypes>())
             game.participants.add(participant)
         }
         var intent: Intent = Intent(applicationContext, TambolaPlayGroundActivity::class.java)

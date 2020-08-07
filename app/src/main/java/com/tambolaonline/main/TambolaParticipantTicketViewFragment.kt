@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tambolaonline.adapters.ParticipantTicketRecyclerViewAdapter
 import com.tambolaonline.data.Game
-import com.tambolaonline.data.Participants
+import com.tambolaonline.data.Participant
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
 import com.tambolaonline.util.TambolaTicketGenerator
@@ -66,11 +66,11 @@ class TambolaParticipantTicketViewFragment : Fragment() {
         ticketRecyclerView.layoutManager = LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false)
 
         //        Create an arraylist
-        val dataList = ArrayList<Participants>()
-        dataList.add(Participants(1,"9820742767","Kartik",TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participants(2,"9820742766","Ruchi",TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participants(3,"9820742765","Nisha",TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participants(4,"9820742764","Me",TambolaTicketGenerator.generateTicket()))
+        val dataList = ArrayList<Participant>()
+        dataList.add(Participant(1,"9820742767","Kartik",TambolaTicketGenerator.generateTicket()))
+        dataList.add(Participant(2,"9820742766","Ruchi",TambolaTicketGenerator.generateTicket()))
+        dataList.add(Participant(3,"9820742765","Nisha",TambolaTicketGenerator.generateTicket()))
+        dataList.add(Participant(4,"9820742764","Me",TambolaTicketGenerator.generateTicket()))
 //        pass the values to RvAdapter
         val participantTicketRecyclerViewAdapter = ParticipantTicketRecyclerViewAdapter(dataList, game.currentState, mContext)
 //        set the recyclerView to the adapter
