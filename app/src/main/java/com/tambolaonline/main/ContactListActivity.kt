@@ -22,8 +22,8 @@ class ContactListActivity : AppCompatActivity() {
 
     val TAG = "ContactListActivity::"
     lateinit var game: Game
-    var itemList = arrayListOf<String>()
-    var participantList = arrayListOf<String>()
+    var contactList = arrayListOf<Participant>()
+    var participantList = arrayListOf<Participant>()
 
     companion object {
         val PERMISSIONS_REQUEST_READ_CONTACTS = 100
@@ -65,8 +65,7 @@ class ContactListActivity : AppCompatActivity() {
 
 
     private fun getContacts() {
-
-        var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, itemList)
+        var adapter = ArrayAdapter<Participant>(this, android.R.layout.simple_list_item_multiple_choice, contactList)
 
         val resolver: ContentResolver = contentResolver;
         val cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
@@ -86,10 +85,13 @@ class ContactListActivity : AppCompatActivity() {
 
                     if(cursorPhone != null && cursorPhone.count > 0) {
                         while (cursorPhone.moveToNext()) {
-                            val phoneNumValue = cursorPhone.getString(
-                                cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                            itemList.add(name)
-                            Log.e("Name ===>",phoneNumValue);
+
+                            val phoneNumValue = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                            var participant = Participant(participantID = cursor.position, phone = phoneNumValue , name = name, ticket = emptyArray(), prize = HashSet<VariationTypes>())
+                            contactList.add(participant)
+                            // itemList.add(name)
+                            // Log.e("Name ===>",phoneNumValue);
+                            Log.e("position =", ""+cursor.position)
                         }
                         cursorPhone.close()
                     }
@@ -98,29 +100,38 @@ class ContactListActivity : AppCompatActivity() {
             }
             cursor.close()
         } else {
-            itemList.add("nisha")
-            //   toast("No contacts available!")
+            var participant = Participant(participantID = 1, phone = "6474083574" , name = "Nisha", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            contactList.add(participant)
+            participant = Participant(participantID = 2, phone = "6474083574" , name = "Kartik", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            contactList.add(participant)
+            participant = Participant(participantID = 3, phone = "6474083574" , name = "Ruchi", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            contactList.add(participant)
+            participant = Participant(participantID = 4, phone = "6474083574" , name = "Darsh", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            contactList.add(participant)
+            participant = Participant(participantID = 5, phone = "6474083574" , name = "Kavish", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            contactList.add(participant)
         }
         contactListView.adapter = adapter
 
-
         contactListView.setOnItemClickListener { adapterView, view, i, l ->
-            if (participantList.contains(itemList[i])) {
-                participantList.remove(itemList[i])
+            if (participantList.contains(contactList[i])) {
+                participantList.remove(contactList[i])
             } else {
-                participantList.add(itemList[i])
+                participantList.add(contactList[i])
             }
             // android.widget.Toast.makeText(this, "You Selected the item --> "+itemList[i], android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 
     fun selectParticipants(view: View) {
-        Log.e("select participants", "")
-        participantList.forEachIndexed { index, element ->
-            var participant = Participant(participantID = index, phno = "tobefilledbychhoti" , name = element, ticket = emptyArray(), prize = HashSet<VariationTypes>())
-            game.participants.add(participant)
+        Log.e("select participants", "" + participantList.count())
+
+        participantList.forEach {
+            game.participants.add(it)
         }
-        var intent: Intent = Intent(applicationContext, TambolaPlayGroundActivity::class.java)
+        // Store updated Game object
+        TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
+        var intent: Intent = Intent(applicationContext, SelectionSummeryActivity::class.java)
         startActivity(intent)
     }
 

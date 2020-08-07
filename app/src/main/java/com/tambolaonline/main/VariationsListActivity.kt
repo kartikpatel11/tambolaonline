@@ -24,11 +24,16 @@ import kotlin.collections.ArrayList
 
 class VariationsListActivity : AppCompatActivity() {
 
-    lateinit var game: Game
+    var game: Game = Game()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-         setContentView(R.layout.activity_variations_list)
+        setContentView(R.layout.activity_variations_list)
+
+        TambolaSharedPreferencesManager.with(this.application)
+
+        //Initialize Game Object and put in sharedpreference to use in next screen
+        TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
 
         //Get Game object from shared preferences
         TambolaSharedPreferencesManager.with(this.application)
