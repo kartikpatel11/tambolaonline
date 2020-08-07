@@ -9,7 +9,7 @@ data class Participant(val participantID:Int,
                        val prize:HashSet<VariationTypes> = hashSetOf()) {
 
     override fun toString(): String {
-        return name
+        return "$name ($phone)"
     }
 }
 
