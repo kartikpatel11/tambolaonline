@@ -10,66 +10,71 @@ import kotlin.collections.HashSet
 import kotlin.random.Random
 
 class TambolaTicketGenerator {
-    private val NUMBERS_TO_GENERATE =15
 
-    private val TICKET_ROW = 3
-    private val TICKET_COL = 9
+    companion object {
+        private val TICKET_ROW = 3
+        private val TICKET_COL = 9
+        private val NUMBERS_TO_GENERATE =15
 
-    val TAG = "TambolaTicketGen::"
+        val TAG = "TambolaTicketGen::"
 
-    fun generateTicket(): Unit {
-        val ticket =  Array(TICKET_ROW){IntArray(TICKET_COL)}
+        fun generateTicket(): Array<IntArray> {
+            val ticket = Array(TICKET_ROW) { IntArray(TICKET_COL) }
 
-        val randomValues:List<Int> = getRandomValues()
+            val randomValues: List<Int> = getRandomValues()
 
-        var ticketMap: MutableMap<Int, MutableList<Int>> = randomValues.groupByTo (mutableMapOf(),{Math.abs(it/10) })
-
-
-
-        for((key, value) in ticketMap) {
+            var ticketMap: MutableMap<Int, MutableList<Int>> =
+                randomValues.groupByTo(mutableMapOf(), { Math.abs(it / 10) })
 
 
-            if (value.size == 1) {
-                var rowPos = Random.nextInt(0, TICKET_ROW-1)
-                value.add(rowPos, 0)
+
+            for ((key, value) in ticketMap) {
+
+
+                if (value.size == 1) {
+                    var rowPos = Random.nextInt(0, TICKET_ROW - 1)
+                    value.add(rowPos, 0)
+                }
+                if (value.size == 2) {
+                    var rowPos = Random.nextInt(0, TICKET_ROW)
+                    value.add(rowPos, 0)
+                }
+
+                for (i in 0..2)
+                    ticket[i][key] = value.get(i)
             }
-            if (value.size == 2) {
-                var rowPos = Random.nextInt(0, TICKET_ROW)
-                value.add(rowPos, 0)
-            }
 
-            for (i in 0..2)
-                ticket[i][key]=value.get(i)
+
+            Log.i(TAG, ticket.contentDeepToString())
+
+            return ticket
+
+
         }
 
 
-           Log.i(TAG, ticket.contentDeepToString())
+        private fun getRandomValues(): List<Int> {
+            val num: ArrayList<Int> = ArrayList<Int>()
+            var LOWER_RANGE = 1
+            var UPPER_RANGE = 9
+
+            for (i in 0..8) {
+                var s = mutableSetOf<Int>()
+                while (s.size < 3) {
+                    s.add((LOWER_RANGE..UPPER_RANGE).random())
+                }
+                num.addAll(s)
+                LOWER_RANGE += 10
+                UPPER_RANGE += 10
+            }
+            num.shuffle()
+
+            return num.take(NUMBERS_TO_GENERATE).sorted()
 
 
-    }
-
-
-    private fun getRandomValues(): List<Int> {
-        val num:ArrayList<Int> = ArrayList<Int>()
-        var LOWER_RANGE=1
-        var UPPER_RANGE=9
-
-        for(i in 0..8)
-        {
-            var s = mutableSetOf<Int>()
-            while (s.size < 3) { s.add((LOWER_RANGE..UPPER_RANGE).random()) }
-            num.addAll(s)
-            LOWER_RANGE+=10
-            UPPER_RANGE+=10
         }
-        num.shuffle()
-
-        return num.take(NUMBERS_TO_GENERATE).sorted()
-
 
     }
-
-
 }
 
 /*fun main(args:Array<String>)

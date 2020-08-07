@@ -144,8 +144,10 @@ class TambolaPlaygroundHomeFragment : Fragment() {
         var currNumberTxtBox = view.findViewById<TextView>(R.id.txt_currentnumber)
         currNumberTxtBox.text = currNumber.toString()
 
-        //Add current number to list
+        //Add current number to list and add it to sharedpref
         currState.add(currNumber)
+        TambolaSharedPreferencesManager.put(game,TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
+
 
         //Show number in recent list of numbers
         var listofrecentnumsTxtBox = view.findViewById<TextView>(R.id.txt_listofnums)
