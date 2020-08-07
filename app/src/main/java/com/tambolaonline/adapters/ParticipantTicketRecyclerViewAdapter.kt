@@ -11,12 +11,13 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.view.isNotEmpty
 import androidx.recyclerview.widget.RecyclerView
 import com.tambolaonline.data.Participant
 import com.tambolaonline.main.R
 import com.tambolaonline.util.TambolaTicketGenerator
 
-class ParticipantTicketRecyclerViewAdapter(val participants: ArrayList<Participant>, val currentState: ArrayList<Int>, val mContext:Context): RecyclerView.Adapter<ParticipantTicketRecyclerViewAdapter.ViewHolder>()  {
+class ParticipantTicketRecyclerViewAdapter(val participants: ArrayList<Participant>, var currentState: ArrayList<Int>, val mContext:Context): RecyclerView.Adapter<ParticipantTicketRecyclerViewAdapter.ViewHolder>()  {
 
     class ViewHolder(ticketView : View):RecyclerView.ViewHolder(ticketView){
         var name = ticketView.findViewById<TextView>(R.id.participant_name)
@@ -36,12 +37,16 @@ class ParticipantTicketRecyclerViewAdapter(val participants: ArrayList<Participa
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.name.text =   participants[position].name
-        holder.ticketlayout.addView(createTicket())
+
+        if(holder.ticketlayout.isNotEmpty()) {
+            holder.ticketlayout.removeAllViewsInLayout()
+        }
+        holder.ticketlayout.addView(createTicket(participants[position].ticket))
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun createTicket(): TableLayout {
-        var ticket = TambolaTicketGenerator.generateTicket()
+    private fun createTicket(ticket: Array<IntArray>): TableLayout {
+      //  var ticket = TambolaTicketGenerator.generateTicket()
 
 
         var table = TableLayout(mContext)

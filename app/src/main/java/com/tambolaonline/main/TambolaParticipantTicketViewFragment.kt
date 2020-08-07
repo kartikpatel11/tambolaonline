@@ -31,8 +31,9 @@ class TambolaParticipantTicketViewFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var mContext: Context
-    lateinit var game: Game
+    private lateinit var mContext: Context
+    private lateinit var game: Game
+    private lateinit var participantTicketRecyclerViewAdapter : ParticipantTicketRecyclerViewAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +72,8 @@ class TambolaParticipantTicketViewFragment : Fragment() {
         dataList.add(Participant(2,"9820742766","Ruchi",TambolaTicketGenerator.generateTicket()))
         dataList.add(Participant(3,"9820742765","Nisha",TambolaTicketGenerator.generateTicket()))
         dataList.add(Participant(4,"9820742764","Me",TambolaTicketGenerator.generateTicket()))
-//        pass the values to RvAdapter
-        val participantTicketRecyclerViewAdapter = ParticipantTicketRecyclerViewAdapter(dataList, game.currentState, mContext)
+
+         participantTicketRecyclerViewAdapter = ParticipantTicketRecyclerViewAdapter(dataList, game.currentState, mContext)
 //        set the recyclerView to the adapter
         ticketRecyclerView.adapter = participantTicketRecyclerViewAdapter;
 
@@ -85,7 +86,16 @@ class TambolaParticipantTicketViewFragment : Fragment() {
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
+        if(hidden==false) {
+            //Get updated game object
+            //Get Game object from shared preferences
+            TambolaSharedPreferencesManager.with(activity!!.application)
+            game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
 
+            //Change current state in adapter
+            participantTicketRecyclerViewAdapter.currentState = game.currentState
+            participantTicketRecyclerViewAdapter.notifyDataSetChanged()
+        }
     }
     companion object {
         /**
