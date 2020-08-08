@@ -16,6 +16,7 @@ import com.tambolaonline.data.Participant
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
 import com.tambolaonline.util.TambolaTicketGenerator
+import com.tambolaonline.variations.VariationTypes
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,14 +67,10 @@ class TambolaParticipantTicketViewFragment : Fragment() {
         var ticketRecyclerView = view.findViewById<RecyclerView>(R.id.participant_ticket_recycler)
         ticketRecyclerView.layoutManager = LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false)
 
-        //        Create an arraylist
-        val dataList = ArrayList<Participant>()
-        dataList.add(Participant(1,"9820742767","Kartik",TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participant(2,"9820742766","Ruchi",TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participant(3,"9820742765","Nisha",TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participant(4,"9820742764","Me",TambolaTicketGenerator.generateTicket()))
 
-         participantTicketRecyclerViewAdapter = ParticipantTicketRecyclerViewAdapter(dataList, game.currentState, mContext)
+
+
+         participantTicketRecyclerViewAdapter = ParticipantTicketRecyclerViewAdapter(game.participants, game.currentState, mContext)
 //        set the recyclerView to the adapter
         ticketRecyclerView.adapter = participantTicketRecyclerViewAdapter;
 

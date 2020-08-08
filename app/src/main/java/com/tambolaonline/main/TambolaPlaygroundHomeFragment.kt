@@ -3,6 +3,7 @@ package com.tambolaonline.main
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +12,17 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.tambolaonline.data.Game
+import com.tambolaonline.data.Participant
 import com.tambolaonline.data.notDone
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
+import com.tambolaonline.util.TambolaTicketGenerator
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private val TAG = "PlaygroundHomeFrg::"
 
 /**
  * A simple [Fragment] subclass.
@@ -58,6 +62,8 @@ class TambolaPlaygroundHomeFragment : Fragment() {
         //Get Game object from shared preferences
         this.activity?.application?.let { TambolaSharedPreferencesManager.with(it) }
         game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
+
+
 
         //Create tambola board to keep track of numbers that are called
         createTambolaBoard(view)
@@ -148,6 +154,8 @@ class TambolaPlaygroundHomeFragment : Fragment() {
         currState.add(currNumber)
         TambolaSharedPreferencesManager.put(game,TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
 
+        // Has Anyone won
+        hasAnyoneWon()
 
         //Show number in recent list of numbers
         var listofrecentnumsTxtBox = view.findViewById<TextView>(R.id.txt_listofnums)
@@ -162,6 +170,41 @@ class TambolaPlaygroundHomeFragment : Fragment() {
             var randomNumberGenBtn = view.findViewById<ImageButton>(R.id.btn_generaterandnumber)
             randomNumberGenBtn.setClickable(false)
             randomNumberGenBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
+        }
+
+    }
+
+    private fun hasAnyoneWon(){
+
+        val participants = game.participants
+        val variations = game.variations
+        val currState = game.currentState
+        var msgTxt = ""
+
+        for(participant in participants) {
+            //go across all variations
+            for((variationType, hasPrizeWon) in variations) {
+                if(!hasPrizeWon) {
+                    //Check if variation is completed for particular participant
+                    if(variationType.variationclass.applyVariation(participant.ticket,currState)) {
+                        participant.prize.add(variationType)
+                        //Update Game variation to signify that the particular variation is completed
+
+                        msgTxt = "$msgTxt \n${participant.name} has won ${variationType.variationname}"
+                        Log.i(TAG,"Participant: ${participant.name} has won ${variationType.variationname}")
+                        variations.put(variationType, true)
+
+                        val toast = Toast.makeText(mContext, msgTxt, Toast.LENGTH_SHORT)
+                        toast.show()
+
+                    }
+                }
+            }
+
+            //Store Game in sharedpref
+            TambolaSharedPreferencesManager.put(game,TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
+
+
         }
 
     }
