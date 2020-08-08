@@ -15,6 +15,7 @@ import com.tambolaonline.data.Game
 import com.tambolaonline.data.Participant
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
+import com.tambolaonline.util.TambolaTicketGenerator
 import com.tambolaonline.variations.VariationTypes
 import kotlinx.android.synthetic.main.activity_contact_list.*
 
@@ -87,7 +88,7 @@ class ContactListActivity : AppCompatActivity() {
                         while (cursorPhone.moveToNext()) {
 
                             val phoneNumValue = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                            var participant = Participant(participantID = cursor.position, phone = phoneNumValue , name = name, ticket = emptyArray(), prize = HashSet<VariationTypes>())
+                            var participant = Participant(participantID = cursor.position, phone = phoneNumValue , name = name, ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
                             contactList.add(participant)
                             // itemList.add(name)
                             // Log.e("Name ===>",phoneNumValue);
@@ -100,15 +101,15 @@ class ContactListActivity : AppCompatActivity() {
             }
             cursor.close()
         } else {
-            var participant = Participant(participantID = 1, phone = "6474083574" , name = "Nisha", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            var participant = Participant(participantID = 1, phone = "6474083574" , name = "Nisha", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
             contactList.add(participant)
-            participant = Participant(participantID = 2, phone = "6474083574" , name = "Kartik", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            participant = Participant(participantID = 2, phone = "6474083574" , name = "Kartik", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
             contactList.add(participant)
-            participant = Participant(participantID = 3, phone = "6474083574" , name = "Ruchi", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            participant = Participant(participantID = 3, phone = "6474083574" , name = "Ruchi", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
             contactList.add(participant)
-            participant = Participant(participantID = 4, phone = "6474083574" , name = "Darsh", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            participant = Participant(participantID = 4, phone = "6474083574" , name = "Darsh", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
             contactList.add(participant)
-            participant = Participant(participantID = 5, phone = "6474083574" , name = "Kavish", ticket = emptyArray(), prize = HashSet<VariationTypes>())
+            participant = Participant(participantID = 5, phone = "6474083574" , name = "Kavish", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
             contactList.add(participant)
         }
         contactListView.adapter = adapter

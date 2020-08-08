@@ -24,18 +24,7 @@ class TambolaPlayGroundActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tambola_play_ground)
 
 
-        //TODO: To be removed when game object comes with populated values of participants
-        var game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
-        ////////
-        val dataList = ArrayList<Participant>()
-        dataList.add(Participant(1,"9820742767","Kartik", TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participant(2,"9820742766","Ruchi", TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participant(3,"9820742765","Nisha", TambolaTicketGenerator.generateTicket()))
-        dataList.add(Participant(4,"9820742764","Me", TambolaTicketGenerator.generateTicket()))
-        game?.participants?.addAll(dataList)
 
-        TambolaSharedPreferencesManager.put(game,TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
-        ///////////
 
         supportFragmentManager.beginTransaction().add(R.id.tambolaplaygroundfragment, ticketFragment, "3").hide(ticketFragment).commit();
         supportFragmentManager.beginTransaction().add(R.id.tambolaplaygroundfragment, winnersFragment, "2").hide(winnersFragment).commit();

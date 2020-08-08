@@ -32,12 +32,6 @@ class VariationsListActivity : AppCompatActivity() {
 
         TambolaSharedPreferencesManager.with(this.application)
 
-        //Initialize Game Object and put in sharedpreference to use in next screen
-        TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
-
-        //Get Game object from shared preferences
-        TambolaSharedPreferencesManager.with(this.application)
-        game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
 
         // access the listView from xml file
         var mListView = findViewById<ListView>(R.id.variationlist)
