@@ -6,18 +6,22 @@ import android.os.Build
 import android.Manifest
 import android.provider.ContactsContract
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.tambolaonline.adapters.ContactListRecyclerAdapter
 import com.tambolaonline.data.Game
 import com.tambolaonline.data.Participant
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
 import com.tambolaonline.util.TambolaTicketGenerator
 import com.tambolaonline.variations.VariationTypes
-import kotlinx.android.synthetic.main.activity_contact_list.*
+import kotlinx.android.synthetic.main.activity_selection_summery.view.*
+import kotlinx.android.synthetic.main.contactlist_row_item.view.*
 
 class ContactListActivity : AppCompatActivity() {
 
@@ -25,6 +29,9 @@ class ContactListActivity : AppCompatActivity() {
     lateinit var game: Game
     var contactList = arrayListOf<Participant>()
     var participantList = arrayListOf<Participant>()
+
+
+    lateinit var contactListRecyclerAdapter: ContactListRecyclerAdapter
 
     companion object {
         val PERMISSIONS_REQUEST_READ_CONTACTS = 100
@@ -66,7 +73,11 @@ class ContactListActivity : AppCompatActivity() {
 
 
     private fun getContacts() {
-        var adapter = ArrayAdapter<Participant>(this, android.R.layout.simple_list_item_multiple_choice, contactList)
+
+        //Initialize recyclerview
+        var contactListRecyclerView = findViewById<RecyclerView>(R.id.contactListRecyclerView)
+        contactListRecyclerView.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.VERTICAL,false)
 
         val resolver: ContentResolver = contentResolver;
         val cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
@@ -88,10 +99,8 @@ class ContactListActivity : AppCompatActivity() {
                         while (cursorPhone.moveToNext()) {
 
                             val phoneNumValue = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                            var participant = Participant(participantID = cursor.position, phone = phoneNumValue , name = name, ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
+                            var participant = Participant(participantID = cursor.position, phone = phoneNumValue , name = name,  prize = HashSet<VariationTypes>())
                             contactList.add(participant)
-                            // itemList.add(name)
-                            // Log.e("Name ===>",phoneNumValue);
                             Log.e("position =", ""+cursor.position)
                         }
                         cursorPhone.close()
@@ -101,37 +110,37 @@ class ContactListActivity : AppCompatActivity() {
             }
             cursor.close()
         } else {
-            var participant = Participant(participantID = 1, phone = "6474083574" , name = "Nisha", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
+            var participant = Participant(participantID = 1, phone = "6474083574" , name = "Nisha", prize = HashSet<VariationTypes>())
             contactList.add(participant)
-            participant = Participant(participantID = 2, phone = "6474083574" , name = "Kartik", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
+            participant = Participant(participantID = 2, phone = "6474083574" , name = "Kartik", prize = HashSet<VariationTypes>())
             contactList.add(participant)
-            participant = Participant(participantID = 3, phone = "6474083574" , name = "Ruchi", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
+            participant = Participant(participantID = 3, phone = "6474083574" , name = "Ruchi",  prize = HashSet<VariationTypes>())
             contactList.add(participant)
-            participant = Participant(participantID = 4, phone = "6474083574" , name = "Darsh", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
+            participant = Participant(participantID = 4, phone = "6474083574" , name = "Darsh",  prize = HashSet<VariationTypes>())
             contactList.add(participant)
-            participant = Participant(participantID = 5, phone = "6474083574" , name = "Kavish", ticket = TambolaTicketGenerator.generateTicket(), prize = HashSet<VariationTypes>())
+            participant = Participant(participantID = 5, phone = "6474083574" , name = "Kavish",  prize = HashSet<VariationTypes>())
             contactList.add(participant)
         }
-        contactListView.adapter = adapter
 
-        contactListView.setOnItemClickListener { adapterView, view, i, l ->
-            if (participantList.contains(contactList[i])) {
-                participantList.remove(contactList[i])
-            } else {
-                participantList.add(contactList[i])
-            }
-            // android.widget.Toast.makeText(this, "You Selected the item --> "+itemList[i], android.widget.Toast.LENGTH_SHORT).show()
-        }
+        contactListRecyclerAdapter = ContactListRecyclerAdapter(contactList, participantList, this)
+        contactListRecyclerView.adapter = contactListRecyclerAdapter
+
+
     }
 
     fun selectParticipants(view: View) {
-        Log.e("select participants", "" + participantList.count())
+            participantList.forEach() {
 
-        participantList.forEach {
-            game.participants.add(it)
-        }
+                //Generate ticket for selected contact
+                it.ticket=TambolaTicketGenerator.generateTicket()
+
+                //Add participant to game object
+                game.participants.add(it)
+
+            }
         // Store updated Game object
         TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
+
         var intent: Intent = Intent(applicationContext, SelectionSummeryActivity::class.java)
         startActivity(intent)
     }

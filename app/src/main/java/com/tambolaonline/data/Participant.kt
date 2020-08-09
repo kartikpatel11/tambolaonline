@@ -5,7 +5,7 @@ import com.tambolaonline.variations.VariationTypes
 data class Participant(val participantID:Int,
                        val phone: String,
                        val name:String,
-                       val ticket:Array<IntArray>,
+                       var ticket:Array<IntArray> = emptyArray(),
                        val prize:HashSet<VariationTypes> = hashSetOf()) {
 
     override fun toString(): String {
