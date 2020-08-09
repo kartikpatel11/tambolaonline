@@ -11,11 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectionSummeryActivity"></activity>
+
+        <activity android:name=".SelectionSummeryActivity" />
         <activity android:name=".TambolaPlayGroundActivity" />
-        <activity android:name=".VariationsListActivity">
+        <activity android:name=".VariationsListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

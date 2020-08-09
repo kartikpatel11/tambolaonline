@@ -1,16 +1,16 @@
 package com.tambolaonline.main
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Build
 import android.Manifest
-import android.provider.ContactsContract
 import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
+import android.os.Build
+import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tambolaonline.adapters.ContactListRecyclerAdapter
@@ -20,8 +20,6 @@ import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
 import com.tambolaonline.util.TambolaTicketGenerator
 import com.tambolaonline.variations.VariationTypes
-import kotlinx.android.synthetic.main.activity_selection_summery.view.*
-import kotlinx.android.synthetic.main.contactlist_row_item.view.*
 
 class ContactListActivity : AppCompatActivity() {
 
@@ -79,37 +77,40 @@ class ContactListActivity : AppCompatActivity() {
         contactListRecyclerView.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL,false)
 
-        val resolver: ContentResolver = contentResolver;
-        val cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
-            null)
 
-        if (cursor != null && cursor.count > 0) {
-            while (cursor.moveToNext()) {
-                val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-                val name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                val phoneNumber = (cursor.getString(
-                    cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))).toInt()
+        val PROJECTION = arrayOf(
+            ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+            ContactsContract.Contacts.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER
+        )
 
-                if (phoneNumber > 0) {
-                    val cursorPhone = contentResolver.query(
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", arrayOf(id), null)
+         var cr = getContentResolver();
+         var cursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PROJECTION, null, null, null);
+        if (cursor != null) {
+            try {
+                var nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+                var numberIndex =
+                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-                    if(cursorPhone != null && cursorPhone.count > 0) {
-                        while (cursorPhone.moveToNext()) {
+                while (cursor.moveToNext()) {
+                    var name = cursor.getString(nameIndex);
+                    var phoneNumValue = cursor.getString(numberIndex);
 
-                            val phoneNumValue = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                            var participant = Participant(participantID = cursor.position, phone = phoneNumValue , name = name,  prize = HashSet<VariationTypes>())
-                            contactList.add(participant)
-                            Log.e("position =", ""+cursor.position)
-                        }
-                        cursorPhone.close()
-                    }
+                    var participant = Participant(
+                        participantID = cursor.position,
+                        phone = phoneNumValue,
+                        name = name,
+                        prize = HashSet<VariationTypes>()
+                    )
+
+                    contactList.add(participant)
 
                 }
+            } finally {
+                cursor.close();
             }
-            cursor.close()
-        } else {
+
+            if(contactList.size ==0){
             var participant = Participant(participantID = 1, phone = "6474083574" , name = "Nisha", prize = HashSet<VariationTypes>())
             contactList.add(participant)
             participant = Participant(participantID = 2, phone = "6474083574" , name = "Kartik", prize = HashSet<VariationTypes>())
@@ -122,9 +123,10 @@ class ContactListActivity : AppCompatActivity() {
             contactList.add(participant)
         }
 
-        contactListRecyclerAdapter = ContactListRecyclerAdapter(contactList, participantList, this)
-        contactListRecyclerView.adapter = contactListRecyclerAdapter
-
+            contactListRecyclerAdapter =
+                ContactListRecyclerAdapter(contactList, participantList, this)
+            contactListRecyclerView.adapter = contactListRecyclerAdapter
+        }
 
     }
 
