@@ -19,4 +19,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="contact_permission_rationale">Need contacts read permission for fetching and displaying contacts</string>
     <string name="action_search">Search</string>
+    <string name="search">Search</string>
 </resources>
