@@ -4,16 +4,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.tambolaonline.data.Participant
 import com.tambolaonline.main.R
-import kotlinx.android.synthetic.main.contactlist_row_item.view.*
 
-class ContactListRecyclerAdapter (val contacts: ArrayList<Participant>, val participants:ArrayList<Participant>, val mContext: Context): RecyclerView.Adapter<ContactListRecyclerAdapter.ViewHolder>() {
 
+class ContactListRecyclerAdapter (val contacts: ArrayList<Participant>, val participants:ArrayList<Participant>, val mContext: Context): RecyclerView.Adapter<ContactListRecyclerAdapter.ViewHolder>() , Filterable{
+
+    var contactListFiltered = ArrayList<Participant>()
+
+    init {
+        contactListFiltered = contacts
+    }
 
     class ViewHolder(contactListItemView : View) : RecyclerView.ViewHolder(contactListItemView){
         var contactName = contactListItemView.findViewById<TextView>(R.id.txt_contactname)
@@ -23,19 +26,22 @@ class ContactListRecyclerAdapter (val contacts: ArrayList<Participant>, val part
         var ticketcntr= contactListItemView.findViewById<TextView>(R.id.txt_ticketcounter)
     }
 
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.contactlist_row_item, parent, false)
         return ContactListRecyclerAdapter.ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-       return contacts.size
+       return contactListFiltered.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.contactName.text = contacts[position].name
-        holder.contactPhone.text= contacts[position].phone
+        holder.contactName.text = contactListFiltered[position].name
+        holder.contactPhone.text= contactListFiltered[position].phone
 
         holder.incrBtn.setOnClickListener{
 
@@ -45,7 +51,7 @@ class ContactListRecyclerAdapter (val contacts: ArrayList<Participant>, val part
                 holder.ticketcntr.text = Integer.toString(value)
 
                 // Add it to participant list
-                participants.add(contacts[position])
+                participants.add(contactListFiltered[position])
 
                 notifyDataSetChanged()
             }
@@ -65,7 +71,7 @@ class ContactListRecyclerAdapter (val contacts: ArrayList<Participant>, val part
 
                 //Remove is value is 0
                 if(value ==0) {
-                    participants.remove(contacts[position])
+                    participants.remove(contactListFiltered[position])
                 }
                 notifyDataSetChanged()
             }
@@ -76,4 +82,41 @@ class ContactListRecyclerAdapter (val contacts: ArrayList<Participant>, val part
 
         }
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults? {
+                val charString = charSequence.toString()
+                if (charString.isEmpty()) {
+                    contactListFiltered = contacts
+                } else {
+                    val filteredList: ArrayList<Participant> = ArrayList()
+                    for (row in contacts) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.name.toLowerCase()
+                                .contains(charString.toLowerCase()) || row.phone
+                                .contains(charSequence)
+                        ) {
+                            filteredList.add(row)
+                        }
+                    }
+                    contactListFiltered = filteredList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = contactListFiltered
+                return filterResults
+            }
+
+            override fun publishResults(
+                charSequence: CharSequence?,
+                filterResults: FilterResults
+            ) {
+                contactListFiltered = filterResults.values as ArrayList<Participant>
+                notifyDataSetChanged()
+            }
+        }
+    }
 }
+

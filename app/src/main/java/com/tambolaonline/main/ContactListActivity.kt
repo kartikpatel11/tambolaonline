@@ -1,16 +1,20 @@
 package com.tambolaonline.main
 
 import android.Manifest
-import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
+import android.view.Menu
 import android.view.View
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tambolaonline.adapters.ContactListRecyclerAdapter
@@ -20,6 +24,9 @@ import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
 import com.tambolaonline.util.TambolaTicketGenerator
 import com.tambolaonline.variations.VariationTypes
+import kotlinx.android.synthetic.main.activity_contact_list.*
+import java.util.*
+
 
 class ContactListActivity : AppCompatActivity() {
 
@@ -30,6 +37,8 @@ class ContactListActivity : AppCompatActivity() {
 
 
     lateinit var contactListRecyclerAdapter: ContactListRecyclerAdapter
+
+
 
     companion object {
         val PERMISSIONS_REQUEST_READ_CONTACTS = 100
@@ -43,8 +52,36 @@ class ContactListActivity : AppCompatActivity() {
         TambolaSharedPreferencesManager.with(this.application)
         game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
 
+       // contact_search.isIconified = false;
+        contact_search.isIconifiedByDefault = false;
+
+
+        val textView = contact_search.findViewById<TextView>(contact_search.context.resources.getIdentifier("android:id/search_src_text", null, null))
+        textView.setTextColor(Color.WHITE)
+
+        val searchIcon = contact_search.findViewById<ImageView>(contact_search.context.resources.getIdentifier("android:id/search_mag_icon", null, null))
+        searchIcon.setColorFilter(Color.WHITE)
+
+        val cancelIcon = contact_search.findViewById<ImageView>(contact_search.context.resources.getIdentifier("android:id/search_close_btn", null, null))
+        cancelIcon.setColorFilter(Color.WHITE)
+
+        contact_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                contactListRecyclerAdapter.filter.filter(newText)
+                return false
+            }
+
+        })
+
         loadContacts()
     }
+
+
 
     private fun loadContacts() {
         var builder = StringBuilder()
@@ -130,21 +167,28 @@ class ContactListActivity : AppCompatActivity() {
 
     }
 
-    fun selectParticipants(view: View) {
-            participantList.forEach() {
+        fun selectParticipants(view: View) {
+                participantList.forEach() {
 
-                //Generate ticket for selected contact
-                it.ticket=TambolaTicketGenerator.generateTicket()
+                    //Generate ticket for selected contact
+                    it.ticket=TambolaTicketGenerator.generateTicket()
 
-                //Add participant to game object
-                game.participants.add(it)
+                    //Add participant to game object
+                    game.participants.add(it)
 
-            }
-        // Store updated Game object
-        TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
+                }
+            // Store updated Game object
+            TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
 
-        var intent: Intent = Intent(applicationContext, SelectionSummeryActivity::class.java)
-        startActivity(intent)
+            var intent: Intent = Intent(applicationContext, SelectionSummeryActivity::class.java)
+            startActivity(intent)
+        }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        contact_search.clearFocus()
+        return super.onCreateOptionsMenu(menu)
     }
+
 
 }
