@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.google.gson.Gson
 import com.tambolaonline.data.Game
 import com.tambolaonline.data.Participant
 import com.tambolaonline.data.notDone
@@ -64,6 +65,8 @@ class TambolaPlaygroundHomeFragment : Fragment() {
         game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
 
 
+        var gson = Gson()
+        Log.i("JSON STRING:" ,gson.toJson(game, Game::class.java))
 
         //Create tambola board to keep track of numbers that are called
         createTambolaBoard(view)

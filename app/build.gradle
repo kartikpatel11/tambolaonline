@@ -6,8 +6,11 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 
+    apply plugin: 'com.android.application'
+    apply plugin: 'com.google.gms.google-services'
+
     defaultConfig {
-        applicationId "com.tambolaonline.tambola"
+        applicationId "com.tambolaonline.main"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -43,11 +46,20 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.7.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.7.22'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'org.mockito:mockito-android:2.7.22'
+
+    compile 'com.github.akashandroid90:imageletter:1.8@aar'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+
 
 }

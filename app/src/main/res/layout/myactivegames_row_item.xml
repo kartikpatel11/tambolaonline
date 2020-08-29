@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="5dp"
+    android:layout_margin="1dp">
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/myactivegamelist_layout">
+
+    <com.github.akashandroid90.imageletter.MaterialLetterIcon
+        android:id="@+id/img_mygames"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:shape_color="@color/colorAccent"
+        app:shape_type="circle"
+        app:letter="K"
+        app:letter_color="@color/white"
+        app:letter_size="20"
+        app:letters_number="1"
+        app:initials="false"
+        app:initials_number="2"
+        app:corner_radius="1dp"
+        app:is_oval="true"
+        app:border_width="0dp"
+        app:border_color="@color/colorAccent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:id="@+id/txt_gamehostname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:layout_marginLeft="20dp"
+        android:paddingTop="5dp"
+        android:layout_alignTop="@id/img_mygames"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@id/img_mygames"
+        android:textStyle="bold"
+        android:text="Tambola Champs" />
+
+    <TextView
+        android:id="@+id/txt_numberofparticipants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"
+        android:layout_margin="1dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/grey"
+        android:layout_below="@id/txt_gamehostname"
+        android:layout_alignLeft="@+id/txt_gamehostname"
+        android:textStyle="bold"
+        android:text="12 participants" />
+
+    <TextView
+        android:id="@+id/txt_numberofvariations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"
+        android:paddingLeft="5dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/grey"
+        android:layout_toRightOf="@id/txt_numberofparticipants"
+        android:layout_alignTop="@+id/txt_numberofparticipants"
+        android:textStyle="bold"
+        android:text="2 prizes" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/txt_gameid" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

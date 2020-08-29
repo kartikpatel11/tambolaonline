@@ -13,6 +13,7 @@ import android.widget.ListView
 import androidx.core.view.size
 import com.tambolaonline.adapters.VariationListAdapter
 import com.tambolaonline.data.Game
+import com.tambolaonline.data.Host
 import com.tambolaonline.data.VariationListAdapterDataSet
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
@@ -32,6 +33,9 @@ class VariationsListActivity : AppCompatActivity() {
 
         TambolaSharedPreferencesManager.with(this.application)
 
+        //Get Host information
+        var host = TambolaSharedPreferencesManager.get<Host>(TambolaConstants.HOST_KEY_NAME)!!
+        game.host = host
 
         // access the listView from xml file
         var mListView = findViewById<ListView>(R.id.variationlist)

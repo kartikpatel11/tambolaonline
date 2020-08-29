@@ -156,7 +156,9 @@ class ContactListActivity : AppCompatActivity() {
             // Store updated Game object
             TambolaSharedPreferencesManager.put(game, TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)
 
-            var intent: Intent = Intent(applicationContext, SelectionSummeryActivity::class.java)
+           // var intent: Intent = Intent(applicationContext, SelectionSummeryActivity::class.java)
+            var intent: Intent = Intent(applicationContext, TambolaMyTicketView::class.java)
+
             startActivity(intent)
         }
 

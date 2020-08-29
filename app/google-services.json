@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "677344885948",
+    "firebase_url": "https://tambolaonline-afc88.firebaseio.com",
+    "project_id": "tambolaonline-afc88",
+    "storage_bucket": "tambolaonline-afc88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677344885948:android:9f47bc0f5959f98c27e4b9",
+        "android_client_info": {
+          "package_name": "com.tambolaonline.main"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677344885948-udgtsu4k1ipgsv3md2np8dchmliuu796.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdoMASFwWOloCnv6xZbxZNMh1CGDfhi8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677344885948-udgtsu4k1ipgsv3md2np8dchmliuu796.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

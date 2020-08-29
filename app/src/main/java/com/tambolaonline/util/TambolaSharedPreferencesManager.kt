@@ -60,4 +60,10 @@ object TambolaSharedPreferencesManager {
         return GsonBuilder().create().fromJson(value, T::class.java)
     }
 
+    /**
+     * Used to delete objects from shared preferences
+     */
+    fun removeAll() {
+        preferences.edit().clear().apply()
+    }
 }

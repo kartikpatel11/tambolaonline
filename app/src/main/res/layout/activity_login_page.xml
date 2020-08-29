@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginPageActivity">
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:hint="Mobile number"
+        android:inputType="phone"
+        android:background="@drawable/tambola_edittext"
+        android:id="@+id/txt_mobilenumber"
+        android:layout_marginTop="120dp"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"/>
+    <EditText
+        android:id="@+id/txt_nickname"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:background="@drawable/tambola_edittext"
+        android:hint="Nickname"
+        android:layout_below="@+id/txt_mobilenumber"
+        android:layout_alignLeft="@+id/txt_mobilenumber"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_below="@+id/txt_nickname"
+        android:layout_centerHorizontal="true"
+        android:text = "Next"
+        android:textStyle="bold"
+        android:layout_margin="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:onClick="openLandingPage"
+        android:background="@color/colorAccent"
+         />
+</RelativeLayout>
