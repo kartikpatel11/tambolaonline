@@ -16,6 +16,7 @@ import com.tambolaonline.data.ActiveGames
 import com.tambolaonline.data.Host
 import com.tambolaonline.main.R
 import com.tambolaonline.main.TambolaMyTicketView
+import com.tambolaonline.util.TambolaConstants
 import kotlin.random.Random
 
 
@@ -73,7 +74,7 @@ class MyActiveGamesRecyclerAdapter(
         //Set onclick listener
         holder.itemView.setOnClickListener{
             val intent = Intent(mContext, TambolaMyTicketView::class.java)
-            intent.putExtra("GAME_ID", activegames[position].gameid)
+            intent.putExtra(TambolaConstants.GAME_ID, activegames[position].gameid)
             mContext.startActivity(intent)
         }
 

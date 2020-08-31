@@ -5,12 +5,16 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.RingtoneManager
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.tambolaonline.util.TambolaConstants
 
 
 class TambolaFirebaseMessagingService : FirebaseMessagingService() {
@@ -29,7 +33,7 @@ class TambolaFirebaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty()) {
             Log.i(TAG, "Message data payload: ${remoteMessage.data}")
 
-             handleNow()
+             handleNow(remoteMessage.data)
 
         }
 
@@ -72,8 +76,22 @@ class TambolaFirebaseMessagingService : FirebaseMessagingService() {
     /**
      * Handle time allotted to BroadcastReceivers.
      */
-    private fun handleNow() {
-        Log.i(TAG, "Short lived task is done.")
+    private fun handleNow(data: MutableMap<String, String>) {
+
+        var extras = Bundle()
+        Log.d("TEMP::::::",data.get("number").toString())
+        var num = data.get(TambolaConstants.NEXT_NUMBER)
+
+        var localIntent = Intent(TambolaConstants.UPDATE_GAME_STATUS_INTENT).apply {
+
+            if (num != null) {
+                extras.putInt (TambolaConstants.NEXT_NUMBER, num.toInt())
+                this.putExtras(extras)
+            }
+        }
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent)
+
     }
 
     /**
@@ -122,6 +140,7 @@ class TambolaFirebaseMessagingService : FirebaseMessagingService() {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
+
 
     companion object {
 

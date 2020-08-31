@@ -16,32 +16,47 @@
         android:paddingRight="20dp"
         android:id="@+id/switch_boardlayout"
         />
-
     <LinearLayout
-        android:id="@+id/tambola_participant_board_layout"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_gravity="fill"
-        android:visibility="gone"/>
+        android:orientation="vertical"
+        android:id="@+id/layout_board"
+        android:layout_below="@+id/switch_boardlayout"
+        android:visibility="gone">
 
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_below="@+id/tambola_participant_board_layout"
-        android:id="@+id/title"
-        android:textSize="20sp"/>
+        <LinearLayout
+            android:id="@+id/tambola_participant_board_layout"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="fill"
+            />
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tambola_participant_board_layout"
+            android:id="@+id/txt_lastfivenumbers"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_lastfivenumbers"
+            android:id="@+id/txt_currentnumber1"
+            android:textSize="20sp"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/layout_board"
         android:id="@+id/myticket_recycler"/>
 
 </RelativeLayout>

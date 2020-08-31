@@ -32,7 +32,7 @@ class LoginPageActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+        /*FirebaseMessaging.getInstance().subscribeToTopic("weather")
             .addOnCompleteListener { task ->
                 var msg = getString(R.string.msg_subscribed)
                 if (!task.isSuccessful) {
@@ -40,7 +40,7 @@ class LoginPageActivity : AppCompatActivity() {
                 }
                 Log.i("Test::", msg)
                 Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
-            }
+            }*/
 
     }
 
