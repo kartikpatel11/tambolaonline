@@ -16,6 +16,7 @@ import com.tambolaonline.data.ActiveGames
 import com.tambolaonline.data.Host
 import com.tambolaonline.main.R
 import com.tambolaonline.main.TambolaMyTicketView
+import com.tambolaonline.main.TambolaPlayGroundActivity
 import com.tambolaonline.util.TambolaConstants
 import kotlin.random.Random
 
@@ -62,21 +63,28 @@ class MyActiveGamesRecyclerAdapter(
         
         if(host.hostPhNo!=activegames[position].host.hostPhNo) {
             holder.hostname.text = "Hosted By " + activegames[position].host.nickname
+            //Set onclick listener (Participant Page)
+            holder.itemView.setOnClickListener{
+                val intent = Intent(mContext, TambolaMyTicketView::class.java)
+                intent.putExtra(TambolaConstants.GAME_ID, activegames[position].gameid)
+                mContext.startActivity(intent)
+            }
         }
         else
         {
             holder.hostname.text = "Hosted By You"
             holder.hostname.setTextColor(mContext.getColor(R.color.colorAccent))
+            //Set onclick listener (Host Page)
+            holder.itemView.setOnClickListener{
+                val intent = Intent(mContext, TambolaPlayGroundActivity::class.java)
+                intent.putExtra(TambolaConstants.GAME_ID, activegames[position].gameid)
+                mContext.startActivity(intent)
+            }
         }
         holder.participants.text = activegames[position].numberOfParticipants.toString() + " Participants"
         holder.prizes.text = activegames[position].numberOfVariations.toString() + " Prizes"
 
-        //Set onclick listener
-        holder.itemView.setOnClickListener{
-            val intent = Intent(mContext, TambolaMyTicketView::class.java)
-            intent.putExtra(TambolaConstants.GAME_ID, activegames[position].gameid)
-            mContext.startActivity(intent)
-        }
+
 
     }
 

@@ -13,11 +13,13 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.tambolaonline.data.Game
-import com.tambolaonline.data.Participant
 import com.tambolaonline.data.notDone
+import com.tambolaonline.services.ServiceBuilder
+import com.tambolaonline.services.TambolaEndPoints
 import com.tambolaonline.util.TambolaConstants
 import com.tambolaonline.util.TambolaSharedPreferencesManager
-import com.tambolaonline.util.TambolaTicketGenerator
+import retrofit2.Call
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,13 +62,7 @@ class TambolaPlaygroundHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Get Game object from shared preferences
-        this.activity?.application?.let { TambolaSharedPreferencesManager.with(it) }
-        game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
 
-
-        var gson = Gson()
-        Log.i("JSON STRING:" ,gson.toJson(game, Game::class.java))
 
         //Create tambola board to keep track of numbers that are called
         createTambolaBoard(view)
@@ -141,6 +137,15 @@ class TambolaPlaygroundHomeFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     public fun nextRandomNumber(view: View) {
+
+        //Get Game object from shared preferences
+        this.activity?.application?.let { TambolaSharedPreferencesManager.with(it) }
+        game = TambolaSharedPreferencesManager.get<Game>(TambolaConstants.TAMBOLA_GAME_SHAREDPREF_KEY)!!
+
+
+        var gson = Gson()
+        Log.i("JSON STRING:" ,gson.toJson(game, Game::class.java))
+
         var currState = game.currentState
         var currNumber: Int
 
@@ -167,6 +172,23 @@ class TambolaPlaygroundHomeFragment : Fragment() {
         //Highlight the number cell
         var numcell = view.findViewById<TextView>(currNumber)
         numcell.setBackgroundColor(view.context.getColor(R.color.colorAccent))
+
+        //Send detail to Server
+        val request = ServiceBuilder.buildService(TambolaEndPoints::class.java)
+        val call = request.storeGameStatus(game.gameid,currNumber)
+
+
+        //Populate games as host
+        call.enqueue(object: retrofit2.Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+             //DO NOTHING
+                Toast.makeText(mContext, "${response}", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         //Disable button if game is complete
         if(!game.notDone()) {
